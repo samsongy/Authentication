@@ -40,13 +40,13 @@ app.post('/', (req, res) => {
         if(err) {
             console.log(err);
         } else {
-            //if user exists
+            //if user exists. Query returns array of objects, use index 0
             if(foundUser[0]) {
                 //compare form password to hashed password in db
                 bcrypt.compare(password, foundUser[0].Password, (err, result) => {
                     //log user in if passwords match
                     if(result) {
-                        res.send("User successfully logged in!");
+                        res.redirect('/home');
                     //throw error if user credentials dont match
                     } else {
                         res.send("ERROR: Incorrect credentials.");
@@ -58,6 +58,14 @@ app.post('/', (req, res) => {
             }
         }
     });
+});
+
+app.get('/home', (req, res) => {
+    res.render('home');
+});
+
+app.get('/signup', (req, res) => {
+    res.render('signup');
 });
 
 //REST API
