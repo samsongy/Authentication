@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
     //get username and password from login form
-    const username = req.body.username;
+    const username = req.body.user;
     const password = req.body.password;
     //create sql query to find user in database
     let sql = `SELECT * FROM users WHERE Username='${username}'`;
