@@ -8,7 +8,6 @@ const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
-app.use(express.json());
 
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -31,6 +30,36 @@ app.get('/', (req, res) => {
     res.render("login");
 });
 
+app.post('/', (req, res) => {
+    //get username and password from login form
+    const username = req.body.username;
+    const password = req.body.password;
+    //create sql query to find user in database
+    let sql = `SELECT * FROM users WHERE Username='${username}'`;
+    db.query(sql, (err, foundUser, fields) => {
+        if(err) {
+            console.log(err);
+        } else {
+            //if user exists
+            if(foundUser[0]) {
+                //compare form password to hashed password in db
+                bcrypt.compare(password, foundUser[0].Password, (err, result) => {
+                    //log user in if passwords match
+                    if(result) {
+                        res.send("User successfully logged in!");
+                    //throw error if user credentials dont match
+                    } else {
+                        res.send("ERROR: Incorrect credentials.");
+                    }
+                });
+            //throw error if user doesn't exist 
+            } else {
+                res.send("User does not exist.");
+            }
+        }
+    });
+});
+
 //REST API
 app.post('/api/users', (req, res) => {
     //hash password entered, add salt
@@ -50,7 +79,9 @@ app.post('/api/users', (req, res) => {
         db.query(sql, user, (err, result, fields) => {
             if(err) {
                 console.log(err);
+                res.send("ERROR");
             } else {
+                console.log("User successfully created!");
                 res.send("User successfully created!");
             }
         });
@@ -77,7 +108,6 @@ app.get('/api/users', (req, res) => {
         if(err) {
             console.log(err);
         } else {
-            console.log(results);
             res.send(results);
         }
     });
@@ -90,7 +120,6 @@ app.get('/api/users/:id', (req, res) => {
         if(err) {
             console.log(err);
         } else {
-            console.log(results);
             res.send(results);
         }
     });
