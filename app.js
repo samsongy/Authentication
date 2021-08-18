@@ -50,7 +50,6 @@ app.post('/api/users', (req, res) => {
         db.query(sql, user, (err, result, fields) => {
             if(err) {
                 console.log(err);
-                res.redirect('/');
             } else {
                 res.send("User successfully created!");
             }
@@ -58,6 +57,18 @@ app.post('/api/users', (req, res) => {
     });
 });
 
+app.delete('/api/users/:id', (req, res) => {
+    //sql query for deleting a specific user based on their ID
+    let sql = `DELETE FROM users WHERE ID = ${req.params.id}`;
+    //query db to delete user
+    db.query(sql, (err, result, fields) => {
+        if(err) {
+            console.log(err);
+        } else {
+            res.send("User successfully deleted.");
+        }
+    });
+});
 
 //For Testing Only
 app.get('/api/users', (req, res) => {
@@ -65,7 +76,6 @@ app.get('/api/users', (req, res) => {
     db.query(sql, (err, results, fields) => {
         if(err) {
             console.log(err);
-            res.redirect('/');
         } else {
             console.log(results);
             res.send(results);
@@ -79,7 +89,6 @@ app.get('/api/users/:id', (req, res) => {
     db.query(sql, (err, results, fields) => {
         if(err) {
             console.log(err);
-            res.redirect('/');
         } else {
             console.log(results);
             res.send(results);
