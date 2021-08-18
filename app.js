@@ -29,16 +29,24 @@ db.connect((err) => {
 app.get('/', (req, res) => {
     res.render("login");
 });
+app.get('/home', (req, res) => {
+    res.render('home');
+});
+app.get('/signup', (req, res) => {
+    res.render('signup');
+});
 
-app.post('/', (req, res) => {
+//REST API
+app.post('/api/login', (req, res) => {
     //get username and password from login form
-    const username = req.body.user;
+    const username = req.body.username;
     const password = req.body.password;
     //create sql query to find user in database
-    let sql = `SELECT * FROM users WHERE Username='${username}'`;
+    let sql = `SELECT * FROM users WHERE Username='${username}' OR Email='${username}'`;
     db.query(sql, (err, foundUser, fields) => {
         if(err) {
             console.log(err);
+            res.redirect('/');
         } else {
             //if user exists. Query returns array of objects, use index 0
             if(foundUser[0]) {
@@ -46,31 +54,25 @@ app.post('/', (req, res) => {
                 bcrypt.compare(password, foundUser[0].Password, (err, result) => {
                     //log user in if passwords match
                     if(result) {
+                        console.log('User successfully logged in.');
                         res.redirect('/home');
                     //throw error if user credentials dont match
                     } else {
-                        res.send("ERROR: Incorrect credentials.");
+                        console.log("Incorrect credentials.");
+                        res.redirect('/');
                     }
                 });
             //throw error if user doesn't exist 
             } else {
-                res.send("User does not exist.");
+                console.log("User does not exist.");
+                res.redirect('/')
             }
         }
     });
 });
 
-app.get('/home', (req, res) => {
-    res.render('home');
-});
-
-app.get('/signup', (req, res) => {
-    res.render('signup');
-});
-
-//REST API
 app.post('/api/users', (req, res) => {
-    //hash password entered, add salt
+    //add salt and hash per number of salt rounds
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         //create new user object, populate prooperties w/ form values
         const user = {
@@ -87,10 +89,10 @@ app.post('/api/users', (req, res) => {
         db.query(sql, user, (err, result, fields) => {
             if(err) {
                 console.log(err);
-                res.send("ERROR");
+                res.redirect('/signup')
             } else {
                 console.log("User successfully created!");
-                res.send("User successfully created!");
+                res.redirect('/');
             }
         });
     });
@@ -109,29 +111,29 @@ app.delete('/api/users/:id', (req, res) => {
     });
 });
 
-//For Testing Only
-app.get('/api/users', (req, res) => {
-    let sql = "SELECT * FROM users";
-    db.query(sql, (err, results, fields) => {
-        if(err) {
-            console.log(err);
-        } else {
-            res.send(results);
-        }
-    });
-});
+// //For Testing Only
+// app.get('/api/users', (req, res) => {
+//     let sql = "SELECT * FROM users";
+//     db.query(sql, (err, results, fields) => {
+//         if(err) {
+//             console.log(err);
+//         } else {
+//             res.send(results);
+//         }
+//     });
+// });
 
-//For Testing Only
-app.get('/api/users/:id', (req, res) => {
-    let sql = `SELECT * FROM users WHERE id = ${req.params.id}` 
-    db.query(sql, (err, results, fields) => {
-        if(err) {
-            console.log(err);
-        } else {
-            res.send(results);
-        }
-    });
-});
+// //For Testing Only
+// app.get('/api/users/:id', (req, res) => {
+//     let sql = `SELECT * FROM users WHERE id = ${req.params.id}` 
+//     db.query(sql, (err, results, fields) => {
+//         if(err) {
+//             console.log(err);
+//         } else {
+//             res.send(results);
+//         }
+//     });
+// });
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");

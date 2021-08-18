@@ -2,4 +2,31 @@
 
 <h1>Sign Up</h1>
 
+<form action="/api/users" method="POST">
+    <div class="firstname-container">
+        <label for="firstname">First Name: </label>
+        <input type="text" name="firstname">
+    </div>
+    <div class="lastname-container">
+        <label for="lastname">Last Name: </label>
+        <input type="text" name="lastname">
+    </div>
+    <div class="email-container">
+        <label for="email">Email: </label>
+        <input type="text" name="email">
+    </div>
+    <div class="username-container">
+        <label for="username">Username: </label>
+        <input type="text" name="username">
+    </div>
+    <div class="password-container">
+        <label for="password">Password: </label>
+        <input type="password" name="password">
+    </div>
+    <button type="submit">Sign Up</button>
+</form>
+
+<span><a href="/">Log In</a></span>
+
 <%- include("partials/footer"); %>
+
