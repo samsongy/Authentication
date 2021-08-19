@@ -29,15 +29,7 @@ db.connect((err) => {
 app.get('/', (req, res) => {
     res.render("login");
 });
-app.get('/home', (req, res) => {
-    res.render('home');
-});
-app.get('/signup', (req, res) => {
-    res.render('signup');
-});
-
-//REST API
-app.post('/api/login', (req, res) => {
+app.post('/', (req, res) => {
     //get username and password from login form
     const username = req.body.username;
     const password = req.body.password;
@@ -70,7 +62,14 @@ app.post('/api/login', (req, res) => {
         }
     });
 });
+app.get('/home', (req, res) => {
+    res.render('home');
+});
+app.get('/signup', (req, res) => {
+    res.render('signup');
+});
 
+//REST API
 app.post('/api/users', (req, res) => {
     //add salt and hash per number of salt rounds
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {

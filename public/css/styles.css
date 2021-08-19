@@ -1,18 +1,61 @@
-.login-form {
-    background-color: lightgreen;
-    width: 400px;
-    height: 300px;
-    margin: auto;
-    position: relative;
-    top: 100px;
+body{
+    margin: 0;
+    padding: 0;
 }
+
+.page-title{
+    text-align: center;
+    position: relative;
+    top: 60px;
+}
+
+.form-container {
+    margin: auto;
+    width: 400px;
+    height: 350px;
+    background-color: white;
+    position: relative;
+    top: 110px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 grey;
+}
+
+.form-title {
+    font-size: 20px;
+    color: grey;
+    font-weight: 0;
+    text-align: center;
+    padding: 20px 0 20px;
+    /* border-bottom: 1px solid grey; */
+}
+
+.login-form {
+    padding: 0, 40px;
+    text-align: center;
+    margin: auto;
+}
+
 
 .login-form-item {
-    display: block;
-    align-items: center;
-    margin-bottom: 10px;
+    width: 90%;
+    margin: auto;
+    padding: 10px 0 10px;
 }
 
-.sign-up-btn {
-    background-color: lightblue;
+.submit-btn {
+    width: 90%;
+    position: relative;
+    top: 10px;
+}
+
+.sign-up-btn{
+    text-align: center;
+    margin: auto;
+    position: relative;
+    top: 50px;
+}
+
+.sign-up-btn a{
+    text-decoration: none;
+    color: grey;
 }
