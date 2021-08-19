@@ -1,0 +1,18 @@
+.login-form {
+    background-color: lightgreen;
+    width: 400px;
+    height: 300px;
+    margin: auto;
+    position: relative;
+    top: 100px;
+}
+
+.login-form-item {
+    display: block;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sign-up-btn {
+    background-color: lightblue;
+}

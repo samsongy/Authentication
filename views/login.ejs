@@ -1,19 +1,20 @@
 <%- include("partials/header"); %>
 
-<h1>Login Page</h1>
+<!-- <div class="page-title-container">
+    <h1 class="page-title">Lift Buddy</h1>
+</div> -->
 
 <form class="login-form" action="/api/login" method="POST">
+    <h3>Log In</h3>
     <div class="user-container">
-        <label for="user">Username or Email: </label>
-        <input type="text" name="username">
+        <input class="login-form-item" type="text" name="username" placeholder="Username or Email " autocomplete="off">
     </div>
     <div class="password-container">
-        <label for="password">Password: </label>
-        <input type="password" name="password">
+        <input class="login-form-item" type="password" name="password" placeholder="Password " autocomplete="off">
     </div>
-    <button class="submit-btn" type="submit">Login</button>
+    <button class="submit-btn login-form-item" type="submit">Log In</button>
+    <span class="sign-up-btn"><a href="/signup">Sign Up</a></span>
 </form>
 
-<span><a href="/signup">Sign Up</a></span>
 
 <%- include("partials/footer"); %>
