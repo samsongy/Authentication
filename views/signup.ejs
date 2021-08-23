@@ -1,10 +1,8 @@
 <%- include("partials/header"); %>
 
 <h1 class="page-title">Lift Buddy</h1>
-
 <form class="signup-form" action="/api/users" method="POST">
-
-    <div class="form-title">Sign up for Lift Buddy</div>
+    <div class="form-title">Sign Up for Lift Buddy</div>
     <div class="signup-form-body">
         <div class="row">
             <div class="col-md-6 signup-form-item">
@@ -14,7 +12,6 @@
                 <input type="text" class="form-control form-control-lg" name="lastname" placeholder="Last name" autocomplete="off" required> 
             </div>
         </div>
-    
         <div class="row">
             <div class="col-md-6 signup-form-item" >
                 <div class="input-group">
@@ -26,21 +23,17 @@
                 <input class="form-control form-control-lg" type="text" name="email" placeholder="Email" required>
             </div>
         </div>
-    
         <div class="col-md-12 signup-form-item">
             <input class="form-control form-control-lg" type="password" name="password" placeholder="Password" required>
         </div>
     </div>
-
     <div class="signup-form-footer">
-        <button class="signup-form-btn btn btn-secondary form-control form-control-lg" type="submit">Sign Up</button>
+        <button class="signup-form-btn btn btn-secondary btn-lg" type="submit">Sign Up</button>
         <div>
             <div>Have an account?</div>
             <div><a class="nav-btn" href="/">Log In</a></div>
         </div>
     </div>
-
-
 </form>
 
 <%- include("partials/footer"); %>
