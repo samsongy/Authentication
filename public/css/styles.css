@@ -1,61 +1,75 @@
-body{
-    margin: 0;
-    padding: 0;
-}
-
+/* multi-page styles */
 .page-title{
-    text-align: center;
     position: relative;
-    top: 60px;
+    text-align: center;
+    top: 75px;
+}
+.form-title {
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.nav-btn{
+    text-decoration: none;
+    color: grey;
+}
+.nav-btn:hover{
+    color: black;
 }
 
-.form-container {
+/* login page styles */
+.login-form {
     margin: auto;
     width: 400px;
-    height: 350px;
+    background-color: white;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 grey;
+    top: 100px;
+}
+.login-form-item {
+    padding: 10px 25px 10px 25px;
+}
+.login-footer {
+    padding-top: 20px;
+    text-align: center;
+}
+.login-submit-btn {
+    display: block;
+}
+.login-nav-btn {
+    display: block;
+    padding: 15px 0 25px;
+}
+
+/* signup page styles */
+.signup-form {
+    margin: auto;
+    width: 500px;
     background-color: white;
     position: relative;
     top: 110px;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 grey;
 }
-
-.form-title {
-    font-size: 20px;
-    color: grey;
-    font-weight: 0;
+.signup-form-body {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.signup-form-item{
+    padding-bottom: 10px;
+}
+.signup-form-footer {
+    padding-top: 25px;
+    padding-bottom: 15px;
     text-align: center;
-    padding: 20px 0 20px;
-    /* border-bottom: 1px solid grey; */
 }
-
-.login-form {
-    padding: 0, 40px;
-    text-align: center;
-    margin: auto;
+.signup-form-btn {
+    width: 50%;
+    margin-bottom: 15px;
 }
 
 
-.login-form-item {
-    width: 90%;
-    margin: auto;
-    padding: 10px 0 10px;
-}
 
-.submit-btn {
-    width: 90%;
-    position: relative;
-    top: 10px;
-}
-
-.sign-up-btn{
-    text-align: center;
-    margin: auto;
-    position: relative;
-    top: 50px;
-}
-
-.sign-up-btn a{
-    text-decoration: none;
-    color: grey;
-}

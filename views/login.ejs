@@ -1,20 +1,24 @@
 <%- include("partials/header"); %>
 
 <h1 class="page-title">Lift Buddy</h1>
-<div class="form-container">
+
+<div class="login-form">
     <div class="form-title">Log Into Lift Buddy</div>
-    <form class="login-form" action="/" method="POST">
+    <form class="login-form-body" action="/" method="POST">
+
         <div class="form-group login-form-item">
-            <input class="form-control form-control-lg" type="text" name="username" placeholder="Username or Email " autocomplete="off">
+            <input class="form-control form-control-lg" type="text" name="username" placeholder="Username or Email " autocomplete="off" required>
         </div>
+
         <div class="form-group login-form-item">
-            <input class="form-control form-control-lg" type="password" name="password" placeholder="Password " autocomplete="off">
+            <input class="form-control form-control-lg" type="password" name="password" placeholder="Password " autocomplete="off" required>
         </div>
-        <button class="btn btn-secondary btn-lg submit-btn" type="submit">Log In</button>
+        
+        <div class="login-footer">
+            <button class="btn btn-secondary btn-lg submit-btn" type="submit">Log In</button>
+            <a class="nav-btn login-nav-btn" href="/signup">Sign Up</a>
+        </div>
     </form>
-    <div class="sign-up-btn"><a href="/signup">Sign Up</a></div>
 </div>
-
-
 
 <%- include("partials/footer"); %>
