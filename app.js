@@ -68,6 +68,9 @@ app.get('/home', (req, res) => {
 app.get('/signup', (req, res) => {
     res.render('signup');
 });
+app.get('*', (req, res) => {
+    res.render('error');
+});
 
 //REST API
 app.post('/api/users', (req, res) => {
