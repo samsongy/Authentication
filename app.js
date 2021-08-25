@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 //     });
 // });
 app.get('/home', (req, res) => {
-    res.render('home');
+    res.render('home', { name: 'Sam'});
 });
 app.get('/signup', (req, res) => {
     res.render('signup');

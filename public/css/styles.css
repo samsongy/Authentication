@@ -19,6 +19,11 @@
     color: black;
 }
 
+/* homepage styles */
+.homepage-title {
+    text-align: center;
+}
+
 /* login page styles */
 .login-form {
     margin: auto;
