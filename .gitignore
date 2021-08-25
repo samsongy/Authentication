@@ -1,3 +1,7 @@
+# additional files:
+config
+migrations
+
 # Logs
 logs
 *.log
