@@ -1,9 +1,13 @@
 <%- include("partials/header"); %>
 
+
 <h1 class="page-title">Lift Buddy</h1>
+<% if(messages.error) { %>
+    <%= messages.error%>
+<% } %>
 <div class="login-form">
     <div class="form-title">Log Into Lift Buddy</div>
-    <form class="login-form-body" action="/" method="POST">
+    <form class="login-form-body" action="/login" method="POST">
         <div class="form-group login-form-item">
             <input class="form-control form-control-lg" type="text" name="username" placeholder="Username or Email " autocomplete="off" required>
         </div>

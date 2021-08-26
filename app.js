@@ -1,29 +1,33 @@
+require('dotenv').config();
 const express = require('express');
+const passport = require('passport');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const User = require('./models/User');
 const { Op } = require("sequelize");
+const flash = require('express-flash');
+const session = require('express-session');
 const app = express();
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
+app.use(flash());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //sequalize connection
 require("./database/connection");
-
-//Routes
-app.get('/', (req, res) => {
-    res.render("login");
-});
-
-app.post('/', async (req, res) => {
-    //attempt code
-    try {
-        const username = req.body.username;
-        const password = req.body.password;
-        //query db if there is a user where username field matches a users email or username
-        const foundUser = await User.findAll({
+const initializePassport = require('./passport.config');
+initializePassport(
+    passport, 
+    async (username) => {
+        return await User.findAll({
             where: {
                 [Op.or]: [
                     { userName: username },
@@ -31,43 +35,36 @@ app.post('/', async (req, res) => {
                 ]
             }
         });
-        //if there is a found user
-        if(foundUser[0]) {
-            //check to see if their password is correct
-            bcrypt.compare(password, foundUser[0].password, (err, result) => {
-                //if error log and redirect to login page
-                if(err) {
-                    console.log(err);
-                    res.redirect('/');
-                } else {
-                    //if passwords match log user into home page
-                    if(result) {
-                        console.log("User successfully logged in!");
-                        res.render('home', { name: foundUser[0].firstName});
-                    //if credentials are in correct log error and redirect to login
-                    } else {
-                        console.log("Incorrect credentials.");
-                        res.redirect('/');
-                    }
-                }
-            });
-        //if the user doesnt exist log and redirect to login screen 
-        } else {
-            console.log('User does not exist.');
-            res.redirect('/');
-        }
-    //if function cant be completed, log error and redirect to login screen 
-    } catch(e) {
-        console.log(e);
-        res.redirect('/');
+    },
+    async (id) => {
+        return await User.findAll({
+            where: {
+                id : id
+            }
+        });
     }
+);
+
+//Routes
+app.get('/', checkAuthentication, (req, res) => {
+    res.render('home', { user: req.user[0].dataValues});
 });
 
-app.get('/signup', (req, res) => {
+app.get('/login', checkNotAuthenticated, (req, res) => {
+    res.render("login");
+});
+
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
+
+app.get('/signup', checkNotAuthenticated, (req, res) => {
     res.render('signup');
 });
 
-app.post('/signup', (req, res) => {
+app.post('/signup', checkNotAuthenticated, (req, res) => {
     //take password from sign up form and salt and hash
     bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
         //attempt code
@@ -87,7 +84,6 @@ app.post('/signup', (req, res) => {
                 res.redirect('/signup');
             //if success print success message and nav to login screen
             } else {
-                console.log('User successfully created!');
                 res.redirect('/');
             }
         //if error log and nav to signup screen
@@ -100,6 +96,11 @@ app.post('/signup', (req, res) => {
 
 app.get('*', (req, res) => {
     res.render('error');
+});
+
+app.post('/logout', (req, res) => {
+    req.logOut();
+    res.redirect('/login');
 });
 
 // app.delete('/api/users/:id', (req, res) => {
@@ -139,6 +140,21 @@ app.get('*', (req, res) => {
 //     });
 // });
 
+function checkAuthentication(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next()
+    } 
+    res.redirect('/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if(req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next();
+}
+
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
+

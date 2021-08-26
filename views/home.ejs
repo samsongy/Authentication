@@ -2,8 +2,11 @@
 
 <div class="homepage-title">
     <h1>Welcome Back</h1>
-    <h1><%=name%>!</h1>
+    <h1><%=user.firstName%>!</h1>
 </div>
-<span><a href='/'>Log Out</a></span>
+
+<form class="logout-container" action="/logout" method="POST">
+    <button class="btn btn-secondary btn-lg submit-btn" type="submit">Log Out</button>
+</form>
 
 <%- include("partials/footer"); %>

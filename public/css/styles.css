@@ -19,12 +19,15 @@
 .homepage-title {
     text-align: center;
 }
+.logout-container {
+    padding-top: 100px;
+    text-align: center;
+}
 
 /* login page styles */
 .login-form {
     margin: auto;
     width: 400px;
-    background-color: white;
     position: relative;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 grey;
@@ -71,6 +74,7 @@
     width: 50%;
     margin-bottom: 15px;
 }
+
 
 
 
