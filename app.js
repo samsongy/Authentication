@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const User = require('./models/User');
 const { Op } = require("sequelize");
 const app = express();
 
@@ -19,7 +20,6 @@ app.get('/', (req, res) => {
 app.post('/', async (req, res) => {
     //attempt code
     try {
-        const User = require('./models/User');
         const username = req.body.username;
         const password = req.body.password;
         //query db if there is a user where username field matches a users email or username
@@ -70,10 +70,9 @@ app.get('/signup', (req, res) => {
 app.post('/signup', (req, res) => {
     //take password from sign up form and salt and hash
     bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
-        //attempt
+        //attempt code
         try {
             //create new user instance and add to db
-            const User = require('./models/User');
             const user = await User.create({
                 firstName: req.body.firstname,
                 lastName: req.body.lastname,
